@@ -37,6 +37,15 @@ public:
     void prolongerSejour(const string& newCheckOutDate);
     void annulerReservation();
     void changerChambre(Chambre* nouvelleChambre);
+
+    bool operator==(const Reservation& other) const {
+        // Compare relevant fields of Reservation
+        return (client == other.client &&
+                chambre == other.chambre &&
+                dateArrivee == other.dateArrivee &&
+                dateDepart == other.dateDepart);
+    }
+    
 };
 
 #endif // RESERVATION_H

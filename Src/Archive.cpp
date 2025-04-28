@@ -1,6 +1,7 @@
 #include "../Headers/Archive.h"
 #include <iostream>
 #include <algorithm>
+#include <memory> // For smart pointers
 
 using namespace std;
 
@@ -11,33 +12,39 @@ Archive::Archive(string dateDernierMisAJour) {}
 Archive::~Archive() {}
 
 // Add a medical record
-void Archive::ajouterDossierMedical(DossierMedical* dm) {
-    dossiersMedicaux.push_back(dm);
+void Archive::ajouterDossierMedical(unique_ptr<DossierMedical> dm) {
+    dossiersMedicaux.push_back(move(dm));
 }
 
 // Remove a medical record
-void Archive::supprimerDossierMedical(DossierMedical dm) {
-    dossiersMedicaux.erase(remove(dossiersMedicaux.begin(), dossiersMedicaux.end(), dm), dossiersMedicaux.end());
+void Archive::supprimerDossierMedical(const DossierMedical& dm) {
+    dossiersMedicaux.erase(remove_if(dossiersMedicaux.begin(), dossiersMedicaux.end(),
+                                     [&dm](const unique_ptr<DossierMedical>& ptr) { return *ptr == dm; }),
+                           dossiersMedicaux.end());
 }
 
 // Add a reservation
-void Archive::ajouterReservation(Reservation* r) {
-    reservations.push_back(r);
+void Archive::ajouterReservation(unique_ptr<Reservation> r) {
+    reservations.push_back(move(r));
 }
 
 // Remove a reservation
-void Archive::supprimerReservation(Reservation r) {
-    reservations.erase(remove(reservations.begin(), reservations.end(), r), reservations.end());
+void Archive::supprimerReservation(const Reservation &r) {
+    reservations.erase(remove_if(reservations.begin(), reservations.end(),
+                                 [&r](const shared_ptr<Reservation>& ptr) { return *ptr == r; }),
+                       reservations.end());
 }
 
 // Add a homeless person
-void Archive::ajouterSansAbri(SansAbri* s) {
-    archiveSansAbri.push_back(s);
+void Archive::ajouterSansAbri(unique_ptr<SansAbri> s) {
+    archiveSansAbri.push_back(move(s));
 }
 
 // Remove a homeless person
-void Archive::supprimerSansAbri(SansAbri s) {
-    archiveSansAbri.erase(remove(archiveSansAbri.begin(), archiveSansAbri.end(), s), archiveSansAbri.end());
+void Archive::supprimerSansAbri(const SansAbri &s) {
+    archiveSansAbri.erase(remove_if(archiveSansAbri.begin(), archiveSansAbri.end(),
+                                    [&s](const unique_ptr<SansAbri>& ptr) { return *ptr == s; }),
+                          archiveSansAbri.end());
 }
 
 // Display information
@@ -51,17 +58,17 @@ void Archive::afficherInfos() const {
 void Archive::consulterArchive() const {
     cout << "Consultation des dossiers médicaux :" << endl;
     for (const auto& dm : dossiersMedicaux) {
-        
+        // Add logic to display details of each medical record
     }
 
     cout << "Consultation des réservations :" << endl;
     for (const auto& r : reservations) {
-        
+        // Add logic to display details of each reservation
     }
 
     cout << "Consultation des sans-abris archivés :" << endl;
     for (const auto& s : archiveSansAbri) {
-        
+        // Add logic to display details of each homeless person
     }
 }
 

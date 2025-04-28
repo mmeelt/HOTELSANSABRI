@@ -2,22 +2,23 @@
 #define ARCHIVE_H
 #include <map>
 #include <string>
-#include <vector> // Include vector
+#include <vector>
+#include <memory> // Include memory for smart pointers
 #include "DossierMedical.h"
-#include "SansAbri.h"    // Include the SansAbri class
-#include "Reservation.h" // Include the Reservation class
-#include "Bloc.h"        // Include the Bloc class
-#include "Utilisateur.h" // Include the Utilisateur class
+#include "SansAbri.h"
+#include "Reservation.h"
+#include "Bloc.h"
+#include "Utilisateur.h"
 using namespace std;
 
 class Archive
 {
 private:
-    vector<DossierMedical *> dossiersMedicaux; // List of medical records
-    vector<Reservation *> reservations;        // List of reservations
-    vector<SansAbri *> archiveSansAbri;        // List of homeless people
-    vector<Bloc *> blocs;                      // List of blocs
-    vector<Utilisateur *> userDatabase;        // List of instances of the User class
+    vector<unique_ptr<DossierMedical>> dossiersMedicaux; // List of medical records
+    vector<unique_ptr<Reservation>> reservations;        // List of reservations
+    vector<unique_ptr<SansAbri>> archiveSansAbri;        // List of homeless people
+    vector<unique_ptr<Bloc>> blocs;                      // List of blocs
+    vector<unique_ptr<Utilisateur>> userDatabase;        // List of instances of the User class
 public:
     // Access control map
     map<pair<string, string>, string> accessControlMap; // Map to manage access control (username, password) -> role
@@ -25,12 +26,12 @@ public:
     Archive(string dateDernierMisAJour);
     ~Archive();
     // CRUD operations
-    void ajouterDossierMedical(DossierMedical* dm);
-    void supprimerDossierMedical(DossierMedical dm);
-    void ajouterReservation(Reservation* r);
-    void supprimerReservation(Reservation r);
-    void ajouterSansAbri(SansAbri* s);
-    void supprimerSansAbri(SansAbri s);
+    void ajouterDossierMedical(unique_ptr<DossierMedical> dm);
+    void supprimerDossierMedical(const DossierMedical& dm);
+    void ajouterReservation(unique_ptr<Reservation> r);
+    void supprimerReservation(const Reservation& r);
+    void ajouterSansAbri(unique_ptr<SansAbri> s);
+    void supprimerSansAbri(const SansAbri& s);
 
     // Manage access control
     void ajouterUtilisateur(const string &username, const string &password, const string &role);
@@ -46,8 +47,8 @@ public:
     Bloc *retrieveBlocFromArchive(int id);
 
     // Methods to access userDatabase
-    void ajouterUtilisateurDansDatabase(Utilisateur *utilisateur);
-    void supprimerUtilisateurDeDatabase(Utilisateur *utilisateur);
+    void ajouterUtilisateurDansDatabase(unique_ptr<Utilisateur> utilisateur);
+    void supprimerUtilisateurDeDatabase(const Utilisateur* utilisateur);
     vector<Utilisateur *> obtenirTousLesUtilisateurs() const;
     Utilisateur *trouverUtilisateurParNom(const string &username) const;
 
