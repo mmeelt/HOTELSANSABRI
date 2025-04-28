@@ -3,39 +3,41 @@
 
 #include "Personne.h"
 #include <string>
+#include <fstream> // ADD THIS for file management
 
 class Utilisateur : public Personne
 {
 protected:
     int id;
-    string username;
-    string mdp;
+    std::string username;
+    std::string mdp;
 
 public:
     // Constructors and Destructor
     Utilisateur() = default; // Default constructor
-    Utilisateur(string nom, string prenom, int age, int id, string &username, string &mdp) : Personne(nom, prenom, age), id(id), username(username), mdp(mdp) {};
+    Utilisateur(std::string nom, std::string prenom, int age, int id, std::string &username, std::string &mdp) 
+        : Personne(nom, prenom, age), id(id), username(username), mdp(mdp) {}
     ~Utilisateur();
 
     // CRUD Methods
     int getId() const;
     void setId(int id);
 
-    string getUsername() const;
-    void setUsername(string &username);
+    std::string getUsername() const;
+    void setUsername(std::string &username);
 
-    // Getters and Setters for mdp
-    string getMdp() const;
-    void setMdp(string &mdp);
-
+    std::string getMdp() const;
+    void setMdp(std::string &mdp);
 
     // Functional Methods
     void afficherProfil() const;
-    bool login(string &username, string &mdp);
+    bool login(std::string &username, std::string &mdp);
     void logout();
-    bool modifierMDP(string &ancienmdp, string &nouveaumdp);
+    bool modifierMDP(std::string &ancienmdp, std::string &nouveaumdp);
 
-    
+    // ✅ File management methods you asked for
+    void ecrireDansFichier(std::ofstream& fichier) const;
+    void lireDepuisFichier(std::ifstream& fichier);
 
     // Overload the << operator
     friend std::ostream &operator<<(std::ostream &os, const Utilisateur &utilisateur)

@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory> // For std::unique_ptr
 #include <iostream>
+#include <fstream> // ✅ add this for file handling
 #include "Bloc.h"
 
 using namespace std;
@@ -20,7 +21,8 @@ private:
 
 public:
     // Constructors
-    Receptionniste(std::string nom, std::string prenom, int age, int id, std::string& username, std::string& mdp): Utilisateur(nom, prenom, age, id, username, mdp) {};
+    Receptionniste(std::string nom, std::string prenom, int age, int id, std::string& username, std::string& mdp)
+        : Utilisateur(nom, prenom, age, id, username, mdp) {}
 
     // Copy Constructor
     Receptionniste(const Receptionniste& other);
@@ -41,6 +43,10 @@ public:
     // Getter and Setter
     string getPoste() const;
     void setPoste(const string& poste);
+
+    // ✅ ADD file management methods
+    void ecrireDansFichier(ofstream& fichier) const;
+    void lireDepuisFichier(ifstream& fichier);
 
     // Overloaded Operators
     friend ostream& operator<<(ostream& os, const Receptionniste& r);

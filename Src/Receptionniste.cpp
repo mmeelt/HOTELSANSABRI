@@ -82,3 +82,37 @@ void Receptionniste::afficherProfil() const {
     Utilisateur::afficherProfil(); // Call base version
     cout << "Poste: " << poste << endl;
 }
+
+// Save Receptionniste
+void Receptionniste::ecrireDansFichier(std::ofstream& fichier) const {
+    Utilisateur::ecrireDansFichier(fichier); // Save inherited fields
+    fichier << poste << std::endl;            // Save poste
+}
+
+// Load Receptionniste
+void Receptionniste::lireDepuisFichier(std::ifstream& fichier) {
+    Utilisateur::lireDepuisFichier(fichier); // Load inherited fields
+    fichier >> poste;                        // Load poste
+}
+
+// =================== FILE MANAGEMENT ===================
+
+#include <fstream> // make sure you include it if not already
+
+void Receptionniste::ecrireDansFichier(ofstream& fichier) const {
+    Utilisateur::ecrireDansFichier(fichier); // Save inherited attributes
+    if (fichier.is_open()) {
+        fichier << poste << endl;
+    } else {
+        cerr << "Erreur : fichier non ouvert pour l'écriture." << endl;
+    }
+}
+
+void Receptionniste::lireDepuisFichier(ifstream& fichier) {
+    Utilisateur::lireDepuisFichier(fichier); // Load inherited attributes
+    if (fichier.is_open()) {
+        getline(fichier, poste);
+    } else {
+        cerr << "Erreur : fichier non ouvert pour la lecture." << endl;
+    }
+}
