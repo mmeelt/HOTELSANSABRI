@@ -1,0 +1,87 @@
+#include "../Headers/Archive.h"
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+// Constructor
+Archive::Archive(string dateDernierMisAJour) : dateDernierMisAJour(dateDernierMisAJour) {}
+
+// Destructor
+Archive::~Archive() {}
+
+// Add a medical record
+void Archive::ajouterDossierMedical(DossierMedical dm) {
+    dossiersMedicaux.push_back(dm);
+}
+
+// Remove a medical record
+void Archive::supprimerDossierMedical(DossierMedical dm) {
+    dossiersMedicaux.erase(remove(dossiersMedicaux.begin(), dossiersMedicaux.end(), dm), dossiersMedicaux.end());
+}
+
+// Add a reservation
+void Archive::ajouterReservation(Reservation r) {
+    reservations.push_back(r);
+}
+
+// Remove a reservation
+void Archive::supprimerReservation(Reservation r) {
+    reservations.erase(remove(reservations.begin(), reservations.end(), r), reservations.end());
+}
+
+// Add a homeless person
+void Archive::ajouterSansAbri(SansAbri s) {
+    archiveSansAbri.push_back(s);
+}
+
+// Remove a homeless person
+void Archive::supprimerSansAbri(SansAbri s) {
+    archiveSansAbri.erase(remove(archiveSansAbri.begin(), archiveSansAbri.end(), s), archiveSansAbri.end());
+}
+
+// Display information
+void Archive::afficherInfos() const {
+    cout << "Date de la dernière mise à jour : " << dateDernierMisAJour << endl;
+    cout << "Nombre de dossiers médicaux : " << dossiersMedicaux.size() << endl;
+    cout << "Nombre de réservations : " << reservations.size() << endl;
+    cout << "Nombre de sans-abris archivés : " << archiveSansAbri.size() << endl;
+}
+
+// Consult the archive
+void Archive::consulterArchive() const {
+    cout << "Consultation des dossiers médicaux :" << endl;
+    for (const auto& dm : dossiersMedicaux) {
+        
+    }
+
+    cout << "Consultation des réservations :" << endl;
+    for (const auto& r : reservations) {
+        
+    }
+
+    cout << "Consultation des sans-abris archivés :" << endl;
+    for (const auto& s : archiveSansAbri) {
+        
+    }
+}
+
+// Generate archive report
+void Archive::genererRapportArchive() const {
+    cout << "Génération du rapport d'archive..." << endl;
+    cout << "Date de la dernière mise à jour : " << dateDernierMisAJour << endl;
+    cout << "Rapport des dossiers médicaux :" << endl;
+    for (const auto& dm : dossiersMedicaux) {
+        
+    }
+
+    cout << "Rapport des réservations :" << endl;
+    for (const auto& r : reservations) {
+        
+    }
+
+    cout << "Rapport des sans-abris archivés :" << endl;
+    for (const auto& s : archiveSansAbri) {
+        
+    }
+}
