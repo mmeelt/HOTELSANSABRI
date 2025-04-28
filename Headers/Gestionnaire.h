@@ -21,7 +21,7 @@ public:
     void ajouterBloc(const Bloc &bloc);
 
     // Lire tous les blocs
-    vector<Bloc> lireBlocs() const;
+    vector<Bloc*> lireBlocs() const;
 
     // Mettre à jour un bloc
     void mettreAJourBloc(int blocId, const Bloc &bloc);

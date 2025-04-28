@@ -98,7 +98,7 @@ void SansAbri::deleteHistoriqueSejour(int index) {
 }
 
 // Display information
-void SansAbri::displayInfo() const {
+void SansAbri::afficherProfil() const {
     cout << "Nom: " << nom << endl;
     cout << "Prenom: " << prenom << endl;
     cout << "Age: " << age << endl;

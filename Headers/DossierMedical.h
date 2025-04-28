@@ -20,13 +20,11 @@ public:
     ~DossierMedical();
     // Getters
     std::string getPatientName() const;
-    int getPatientID() const;
     std::vector<std::string> getMedicalHistory() const;
     std::vector<std::string> getPrescriptions() const;
 
     // Setters
     void setPatientName(const std::string &name);
-    void setPatientID(int id);
 
     // Methods to add records
     void addMedicalHistory(const std::string &record);

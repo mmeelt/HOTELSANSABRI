@@ -66,20 +66,7 @@ void Archive::consulterArchive() const {
 }
 
 // Generate archive report
-void Archive::genererRapportArchive() const {
-    cout << "Génération du rapport d'archive..." << endl;
-    cout << "Rapport des dossiers médicaux :" << endl;
-    for (const auto& dm : dossiersMedicaux) {
-        
-    }
-
-    cout << "Rapport des réservations :" << endl;
-    for (const auto& r : reservations) {
-        
-    }
-
-    cout << "Rapport des sans-abris archivés :" << endl;
-    for (const auto& s : archiveSansAbri) {
-        
-    }
+void Archive::generRapportArchive() const {
+    cout << "Génération du rapport d'archive :" << endl;
+    // Implement report generation logic here
 }

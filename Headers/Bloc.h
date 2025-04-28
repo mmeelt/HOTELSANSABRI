@@ -26,6 +26,7 @@ public:
     int getId() const;
     // Display information
     void afficherInfos() const;
+    Chambre* trouverChambreParNumero(int chambreNumero);
 };
 
 #endif // BLOC_H

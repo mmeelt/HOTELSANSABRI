@@ -8,19 +8,19 @@ using namespace std;
 
 // Ajouter un bloc
 void Gestionnaire::ajouterBloc(const Bloc &bloc) {
-    blocs.push_back(bloc);
+    blocs.push_back(new Bloc(bloc));
 }
 
 // Lire tous les blocs
-vector<Bloc> Gestionnaire::lireBlocs() const {
+vector<Bloc*> Gestionnaire::lireBlocs() const {
     return blocs;
 }
 
 // Mettre à jour un bloc
 void Gestionnaire::mettreAJourBloc(int blocId, const Bloc &bloc) {
     for (auto &b : blocs) {
-        if (b.getId() == blocId) {
-            b = bloc;
+        if (b->getId() == blocId) {
+            *b = bloc;
             return;
         }
     }
@@ -47,8 +47,8 @@ void Gestionnaire::supprimerBloc(int blocId) {
 // Trouver un bloc par son ID
 Bloc Gestionnaire::trouverBlocParId(int blocId) {
     for (const auto &b : blocs) {
-        if (b.getId() == blocId) {
-            return b;
+        if (b->getId() == blocId) {
+            return *b;
         }
     }
     throw runtime_error("Bloc avec ID " + to_string(blocId) + " non trouvé.");
@@ -57,8 +57,8 @@ Bloc Gestionnaire::trouverBlocParId(int blocId) {
 // Ajouter une chambre dans un bloc
 void Gestionnaire::ajouterChambreDansBloc(int blocId, Chambre chambre) {
     for (auto &b : blocs) {
-        if (b.getId() == blocId) {
-            b.ajouterChambre(chambre);
+        if (b->getId() == blocId) {
+            b->ajouterChambre(&chambre);
             return;
         }
     }
@@ -68,8 +68,13 @@ void Gestionnaire::ajouterChambreDansBloc(int blocId, Chambre chambre) {
 // Supprimer une chambre d'un bloc
 void Gestionnaire::supprimerChambreDansBloc(int blocId, int chambreNumero) {
     for (auto &b : blocs) {
-        if (b.getId() == blocId) {
-            b.supprimerChambre(chambreNumero);
+        if (b->getId() == blocId) {
+            Chambre* chambre = b->trouverChambreParNumero(chambreNumero);
+            if (chambre) {
+                b->supprimerChambre(chambre);
+            } else {
+                cout << "Chambre avec numéro " << chambreNumero << " non trouvée." << endl;
+            }
             return;
         }
     }
@@ -79,8 +84,8 @@ void Gestionnaire::supprimerChambreDansBloc(int blocId, int chambreNumero) {
 // Afficher les chambres d'un bloc
 void Gestionnaire::afficherChambresBloc(int blocId) {
     for (const auto &b : blocs) {
-        if (b.getId() == blocId) {
-            b.afficherChambres();
+        if (b->getId() == blocId) {
+            b->afficherInfos();
             return;
         }
     }

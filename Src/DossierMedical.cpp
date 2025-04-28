@@ -13,12 +13,10 @@ DossierMedical::~DossierMedical() {}
 
 // Getters
 std::string DossierMedical::getPatientName() const {
-    return patientName;
+    return this->sansAbri->getNom(); // Assuming SansAbri has a method getNom() to get the name
 }
 
-int DossierMedical::getPatientID() const {
-    return patientID;
-}
+
 
 std::vector<std::string> DossierMedical::getMedicalHistory() const {
     return historiqueMaladies;
@@ -30,12 +28,9 @@ std::vector<std::string> DossierMedical::getPrescriptions() const {
 
 // Setters
 void DossierMedical::setPatientName(const std::string &name) {
-    patientName = name;
+    this->sansAbri->setNom(name) ;
 }
 
-void DossierMedical::setPatientID(int id) {
-    patientID = id;
-}
 
 // Methods to add records
 void DossierMedical::addMedicalHistory(const std::string &record) {
@@ -50,8 +45,7 @@ void DossierMedical::addPrescription(const std::string &prescription) {
 
 // Display method
 void DossierMedical::displayDossier() const {
-    cout << "Patient Name: " << patientName << endl;
-    cout << "Patient ID: " << patientID << endl;
+    cout << "Patient Name: " << this->getPatientName() << endl;
     cout << "Last Updated: " << dateDernierMisAJour << endl;
 
     cout << "Medical History:" << endl;

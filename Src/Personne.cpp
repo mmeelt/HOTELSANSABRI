@@ -5,13 +5,13 @@
 using namespace std;
 
 Personne::Personne(string name, string surname, int age) {
-    this->name = name; // Initialize the name
-    this->surname = surname; // Initialize the surname
+    this->nom = name; // Initialize the name
+    this->prenom = surname; // Initialize the surname
     this->age = age; // Initialize the age
 }
-void Personne::displayInfo() const {
+void Personne::afficherProfil() const {
     // Display the person's information
-    cout << "Name: " << name << endl;
-    cout << "Surname: " << surname << endl;
+    cout << "Name: " << nom << endl;
+    cout << "Surname: " << prenom << endl;
     cout << "Age: " << age << endl;
 }
