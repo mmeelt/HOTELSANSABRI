@@ -25,11 +25,11 @@ public:
     Archive(string dateDernierMisAJour);
     ~Archive();
     // CRUD operations
-    void ajouterDossierMedical(DossierMedical dm);
+    void ajouterDossierMedical(DossierMedical* dm);
     void supprimerDossierMedical(DossierMedical dm);
-    void ajouterReservation(Reservation r);
+    void ajouterReservation(Reservation* r);
     void supprimerReservation(Reservation r);
-    void ajouterSansAbri(SansAbri s);
+    void ajouterSansAbri(SansAbri* s);
     void supprimerSansAbri(SansAbri s);
 
     // Manage access control
@@ -50,6 +50,8 @@ public:
     void supprimerUtilisateurDeDatabase(Utilisateur *utilisateur);
     vector<Utilisateur *> obtenirTousLesUtilisateurs() const;
     Utilisateur *trouverUtilisateurParNom(const string &username) const;
+
+    void afficherInfos() const; // Display information about the archive
 };
 
 #endif // ARCHIVE_H

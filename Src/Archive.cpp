@@ -5,13 +5,13 @@
 using namespace std;
 
 // Constructor
-Archive::Archive(string dateDernierMisAJour) : dateDernierMisAJour(dateDernierMisAJour) {}
+Archive::Archive(string dateDernierMisAJour) {}
 
 // Destructor
 Archive::~Archive() {}
 
 // Add a medical record
-void Archive::ajouterDossierMedical(DossierMedical dm) {
+void Archive::ajouterDossierMedical(DossierMedical* dm) {
     dossiersMedicaux.push_back(dm);
 }
 
@@ -21,7 +21,7 @@ void Archive::supprimerDossierMedical(DossierMedical dm) {
 }
 
 // Add a reservation
-void Archive::ajouterReservation(Reservation r) {
+void Archive::ajouterReservation(Reservation* r) {
     reservations.push_back(r);
 }
 
@@ -31,7 +31,7 @@ void Archive::supprimerReservation(Reservation r) {
 }
 
 // Add a homeless person
-void Archive::ajouterSansAbri(SansAbri s) {
+void Archive::ajouterSansAbri(SansAbri* s) {
     archiveSansAbri.push_back(s);
 }
 
@@ -42,7 +42,6 @@ void Archive::supprimerSansAbri(SansAbri s) {
 
 // Display information
 void Archive::afficherInfos() const {
-    cout << "Date de la dernière mise à jour : " << dateDernierMisAJour << endl;
     cout << "Nombre de dossiers médicaux : " << dossiersMedicaux.size() << endl;
     cout << "Nombre de réservations : " << reservations.size() << endl;
     cout << "Nombre de sans-abris archivés : " << archiveSansAbri.size() << endl;
@@ -69,7 +68,6 @@ void Archive::consulterArchive() const {
 // Generate archive report
 void Archive::genererRapportArchive() const {
     cout << "Génération du rapport d'archive..." << endl;
-    cout << "Date de la dernière mise à jour : " << dateDernierMisAJour << endl;
     cout << "Rapport des dossiers médicaux :" << endl;
     for (const auto& dm : dossiersMedicaux) {
         
