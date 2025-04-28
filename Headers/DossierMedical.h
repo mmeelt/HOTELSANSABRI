@@ -3,19 +3,20 @@
 
 #include <string>
 #include <vector>
+#include <memory> // For std::unique_ptr
 #include "SansAbri.h"
 using namespace std;
 
 class DossierMedical
 {
-    SansAbri *sansAbri; // Pointer to the homeless person
+    unique_ptr<SansAbri> sansAbri; // Unique pointer to the homeless person
     vector<string> historiqueMaladies; // Medical history of the patient
     vector<string> traitementsEnCours; // List of prescriptions
     string dateDernierMisAJour; // Date of the last update
 
 public:
     // Constructor
-    DossierMedical(SansAbri* sansAbri, vector<string> historiqueMaladies = {}, vector<string> traitementsEnCours = {}, string dateDernierMisAJour = "Today");
+    DossierMedical(unique_ptr<SansAbri> sansAbri, vector<string> historiqueMaladies = {}, vector<string> traitementsEnCours = {}, string dateDernierMisAJour = "Today");
     // Destructor
     ~DossierMedical();
     // Getters

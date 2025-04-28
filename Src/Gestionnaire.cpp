@@ -7,12 +7,12 @@ using namespace std;
 
 
 // Ajouter un bloc
-void Gestionnaire::ajouterBloc(const Bloc &bloc) {
-    blocs.push_back(new Bloc(bloc));
+void Gestionnaire::ajouterBloc(unique_ptr<Bloc> bloc) {
+    blocs.push_back(std::move(bloc));
 }
 
 // Lire tous les blocs
-vector<Bloc*> Gestionnaire::lireBlocs() const {
+const vector<unique_ptr<Bloc>>& Gestionnaire::lireBlocs() const {
     return blocs;
 }
 
@@ -45,10 +45,10 @@ void Gestionnaire::supprimerBloc(int blocId) {
 }
 
 // Trouver un bloc par son ID
-Bloc Gestionnaire::trouverBlocParId(int blocId) {
+unique_ptr<Bloc> Gestionnaire::trouverBlocParId(int blocId) {
     for (const auto &b : blocs) {
         if (b->getId() == blocId) {
-            return *b;
+            return std::make_unique<Bloc>(*b);
         }
     }
     throw runtime_error("Bloc avec ID " + to_string(blocId) + " non trouvé.");
@@ -58,7 +58,7 @@ Bloc Gestionnaire::trouverBlocParId(int blocId) {
 void Gestionnaire::ajouterChambreDansBloc(int blocId, Chambre chambre) {
     for (auto &b : blocs) {
         if (b->getId() == blocId) {
-            b->ajouterChambre(&chambre);
+            b->ajouterChambre(std::make_unique<Chambre>(chambre)); // Assuming Chambre has a copy constructor
             return;
         }
     }
@@ -71,7 +71,7 @@ void Gestionnaire::supprimerChambreDansBloc(int blocId, int chambreNumero) {
         if (b->getId() == blocId) {
             Chambre* chambre = b->trouverChambreParNumero(chambreNumero);
             if (chambre) {
-                b->supprimerChambre(chambre);
+                b->supprimerChambre(std::make_unique<Chambre>(*chambre)); // Assuming Chambre has a copy constructor
             } else {
                 cout << "Chambre avec numéro " << chambreNumero << " non trouvée." << endl;
             }

@@ -6,7 +6,7 @@ Chambre::Chambre(int numero, bool estLibre, const std::string& etat)
 
 Chambre::~Chambre() {}
 
-void Chambre::attribuer(SansAbri* sansAbri) {
+void Chambre::attribuer(unique_ptr<SansAbri> sansAbri) {
     if (estLibre) {
         estLibre = false;
         etat = "Occupée";
@@ -26,6 +26,6 @@ void Chambre::liberer() {
     }
 }
 
-std::string Chambre::getEtat() {
+std::string Chambre::getEtat() const {
     return etat;
 }

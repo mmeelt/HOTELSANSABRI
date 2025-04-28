@@ -44,15 +44,17 @@ public:
     // Generate archive report
     void generRapportArchive() const;
 
-    Bloc *retrieveBlocFromArchive(int id);
+    unique_ptr<Bloc> retrieveBlocFromArchive (int id) const; // Mark as const since it doesn't modify the object
 
     // Methods to access userDatabase
     void ajouterUtilisateurDansDatabase(unique_ptr<Utilisateur> utilisateur);
-    void supprimerUtilisateurDeDatabase(const Utilisateur* utilisateur);
+    void supprimerUtilisateurDeDatabase(unique_ptr<Utilisateur> utilisateur); // Use const reference
     vector<Utilisateur *> obtenirTousLesUtilisateurs() const;
-    Utilisateur *trouverUtilisateurParNom(const string &username) const;
+    unique_ptr<Utilisateur> trouverUtilisateurParNom(const string &username) const;
 
     void afficherInfos() const; // Display information about the archive
+
+    
 };
 
 #endif // ARCHIVE_H

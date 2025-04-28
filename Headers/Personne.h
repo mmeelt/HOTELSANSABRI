@@ -5,7 +5,6 @@
 using namespace std;
 
 
-
 class Personne {
 protected:   
     std::string nom; // Name of the person

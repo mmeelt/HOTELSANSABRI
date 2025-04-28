@@ -9,33 +9,28 @@ Bloc::Bloc(int id, const string& nomBloc)
     : idBloc(id), nom(nomBloc), pourcentageSaturation(0.0f), capaciteTotale(0) {}
 
 // Destructor
-Bloc::~Bloc() {
-    for (Chambre* chambre : chambres) {
-        delete chambre;
-    }
-    chambres.clear();
-}
+Bloc::~Bloc() {}
 
 // Add a room
-void Bloc::ajouterChambre(Chambre* ch) {
+void Bloc::ajouterChambre(unique_ptr<Chambre> ch) {
     chambres.push_back(ch);
     capaciteTotale += ch->getCapacite();
     pourcentageSaturation = getTauxOccupation();
 }
 
 // Remove a room
-void Bloc::supprimerChambre(Chambre* ch) {
+Bloc Bloc::supprimerChambre(unique_ptr<Chambre> ch) {
     auto it = find(chambres.begin(), chambres.end(), ch);
     if (it != chambres.end()) {
         capaciteTotale -= (*it)->getCapacite();
-        delete *it;
+        it->reset();
         chambres.erase(it);
         pourcentageSaturation = getTauxOccupation();
     }
 }
 
 // Update block information
-void Bloc::updateInfo(int nouveauId, string nouveauNom) {
+void Bloc::updateInfo(int nouveauId, const string& nouveauNom) {
     idBloc = nouveauId;
     nom = nouveauNom;
 }
@@ -50,7 +45,7 @@ float Bloc::getTauxOccupation() const {
     if (capaciteTotale == 0) return 0.0f;
 
     int totalOccupants = 0;
-    for (const Chambre* chambre : chambres) {
+    for (const unique_ptr<Chambre>& chambre : chambres) {
         totalOccupants += chambre->getOccupants();
     }
     return (static_cast<float>(totalOccupants) / capaciteTotale) * 100.0f;
@@ -63,7 +58,7 @@ void Bloc::afficherInfos() const {
     cout << "Capacite Totale: " << capaciteTotale << endl;
     cout << "Taux d'Occupation: " << pourcentageSaturation << "%" << endl;
     cout << "Chambres: " << endl;
-    for (const Chambre* chambre : chambres) {
+    for (const unique_ptr<Chambre>& chambre : chambres) {
         chambre->afficherInfos();
     }
 }

@@ -6,13 +6,11 @@ using namespace std;
 
 // Constructor
 SansAbri::SansAbri(const string &nom, const string &prenom, int age, const string &situation,
-                   vector<string> historiqueSejour, DossierMedical *dossierMedical)
-    : Personne(nom, prenom, age), situation(situation), historiqueSejour(historiqueSejour), dossierMedical(dossierMedical) {}
+    vector<string> historiqueSejour , std::unique_ptr<DossierMedical> dossierMedical )
+    : Personne(nom, prenom, age), situation(situation), historiqueSejour(historiqueSejour), dossierMedical(std::move(dossierMedical)) {}
 
 // Destructor
-SansAbri::~SansAbri() {
-    delete dossierMedical; // Free the memory allocated for the medical record
-}
+SansAbri::~SansAbri() {}
 
 // Getters
 int SansAbri::getId() const {
@@ -39,8 +37,8 @@ vector<string> SansAbri::getHistoriqueSejour() const {
     return historiqueSejour;
 }
 
-DossierMedical* SansAbri::getDossierMedical() const {
-    return dossierMedical;
+const DossierMedical* SansAbri::getDossierMedical() const {
+    return dossierMedical.get();
 }
 
 // Setters
@@ -64,11 +62,8 @@ void SansAbri::addHistoriqueSejour(const string &sejour) {
     historiqueSejour.push_back(sejour);
 }
 
-void SansAbri::setDossierMedical(DossierMedical *dossier) {
-    if (dossierMedical) {
-        delete dossierMedical; // Free the old medical record
-    }
-    dossierMedical = dossier;
+void SansAbri::setDossierMedical(std::unique_ptr<DossierMedical> dossier) {
+    dossierMedical = std::move(dossier);
 }
 
 // CRUD operations

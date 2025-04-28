@@ -4,16 +4,17 @@
 #include "Personne.h"
 #include "DossierMedical.h" // Include the DossierMedical class
 #include <vector>
+#include <memory> // For std::unique_ptr
 
 class SansAbri : public Personne
 {
     string situation;
     vector<string> historiqueSejour; // List of needs of the homeless person
-    DossierMedical *dossierMedical;  // Medical record of the homeless person
+    std::unique_ptr<DossierMedical> dossierMedical; // Medical record of the homeless person
 public:
     // Constructor
     SansAbri(const string &nom, const string &prenom, int age, const string &situation,
-             vector<string> historiqueSejour = {}, DossierMedical *dossierMedical = nullptr);
+             vector<string> historiqueSejour = {}, std::unique_ptr<DossierMedical> dossierMedical = nullptr);
 
     // Destructor
     ~SansAbri();
@@ -25,7 +26,7 @@ public:
     int getAge() const;
     string getSituation() const;
     vector<string> getHistoriqueSejour() const;
-    DossierMedical* getDossierMedical() const;
+    const DossierMedical* getDossierMedical() const;
 
     // Setters
     void setNom(const string &nom);
@@ -33,7 +34,7 @@ public:
     void setAge(int age);
     void setSituation(const string &situation);
     void addHistoriqueSejour(const string &sejour);
-    void setDossierMedical(DossierMedical *dossier);
+    void setDossierMedical(std::unique_ptr<DossierMedical> dossier);
 
     // CRUD operations
     void createHistoriqueSejour(const string &sejour);

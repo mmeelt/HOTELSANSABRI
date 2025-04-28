@@ -3,9 +3,9 @@
 using namespace std;
 
 // Constructor
-DossierMedical::DossierMedical(SansAbri* sansAbri, vector<string> historiqueMaladies, vector<string> traitementsEnCours, string dateDernierMisAJour)
+DossierMedical::DossierMedical(unique_ptr<SansAbri> sansAbri, vector<string> historiqueMaladies, vector<string> traitementsEnCours, string dateDernierMisAJour )
     : historiqueMaladies(historiqueMaladies), traitementsEnCours(traitementsEnCours), dateDernierMisAJour(dateDernierMisAJour) {
-    this->sansAbri = sansAbri; // Initialize the pointer to the homeless person
+    this->sansAbri = std::move(sansAbri); // Initialize the pointer to the homeless person
 }
 
 // Destructor

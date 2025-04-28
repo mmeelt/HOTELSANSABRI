@@ -16,13 +16,6 @@ void Archive::ajouterDossierMedical(unique_ptr<DossierMedical> dm) {
     dossiersMedicaux.push_back(move(dm));
 }
 
-// Remove a medical record
-void Archive::supprimerDossierMedical(const DossierMedical& dm) {
-    dossiersMedicaux.erase(remove_if(dossiersMedicaux.begin(), dossiersMedicaux.end(),
-                                     [&dm](const unique_ptr<DossierMedical>& ptr) { return *ptr == dm; }),
-                           dossiersMedicaux.end());
-}
-
 // Add a reservation
 void Archive::ajouterReservation(unique_ptr<Reservation> r) {
     reservations.push_back(move(r));
@@ -40,12 +33,6 @@ void Archive::ajouterSansAbri(unique_ptr<SansAbri> s) {
     archiveSansAbri.push_back(move(s));
 }
 
-// Remove a homeless person
-void Archive::supprimerSansAbri(const SansAbri &s) {
-    archiveSansAbri.erase(remove_if(archiveSansAbri.begin(), archiveSansAbri.end(),
-                                    [&s](const unique_ptr<SansAbri>& ptr) { return *ptr == s; }),
-                          archiveSansAbri.end());
-}
 
 // Display information
 void Archive::afficherInfos() const {

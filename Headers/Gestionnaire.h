@@ -6,28 +6,30 @@
 #include "Bloc.h"
 #include "Chambre.h"
 #include <vector>
+#include <memory> // For std::unique_ptr
 
 class Gestionnaire : public Administrateur, public RespBloc
 {
 public:
     // Constructeur par défaut
-    Gestionnaire(string nom, string prenom, int age, int id, string& username, string& mdp, vector<Bloc*> blocs = {}, float saturationGlobale = 0.0, int capaciteGlobale = 0)
-        : Utilisateur(nom, prenom, age, id, username, mdp), Administrateur(nom, prenom, age, id, username, mdp), RespBloc(nom, prenom, age, id, username, mdp, blocs) {}
+    Gestionnaire(string nom, string prenom, int age, int id, string& username, string& mdp, std::vector<std::unique_ptr<Bloc>> blocs = {}, float saturationGlobale = 0.0, int capaciteGlobale = 0)
+        : Utilisateur(nom, prenom, age, id, username, mdp), Administrateur(nom, prenom, age, id, username, mdp), RespBloc(nom, prenom, age, id, username, mdp, std::move(blocs)) {}
 
     // Destructeur
     ~Gestionnaire();
 
     // Ajouter un bloc
-    void ajouterBloc(const Bloc &bloc);
+    void ajouterBloc(std::unique_ptr<Bloc> bloc);
 
     // Lire tous les blocs
-    vector<Bloc*> lireBlocs() const;
+    const std::vector<unique_ptr<Bloc>>& lireBlocs() const;
 
     // Mettre à jour un bloc
     void mettreAJourBloc(int blocId, const Bloc &bloc);
 
     // Supprimer un bloc
     void supprimerBlocParId(int blocId);
+
     // Gérer un bloc
     void gererBloc(Bloc bloc);
 
@@ -35,7 +37,7 @@ public:
     void supprimerBloc(int blocId);
 
     // Trouver un bloc par son ID
-    Bloc trouverBlocParId(int blocId);
+    unique_ptr<Bloc> trouverBlocParId(int blocId);
 
     // Ajouter une chambre dans un bloc
     void ajouterChambreDansBloc(int blocId, Chambre chambre);
@@ -48,6 +50,9 @@ public:
 
     // Afficher les statistiques de l'hôtel
     void afficherStatistiquesHotel();
+
+private:
+    std::vector<std::unique_ptr<Bloc>> blocs_; // Use unique_ptr for ownership
 };
 
 #endif // GESTIONNAIRE_H

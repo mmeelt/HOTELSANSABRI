@@ -10,10 +10,10 @@ public:
         : Utilisateur(nom, prenom, age, id, username, mdp) {}
     virtual ~Administrateur();
     
-    void createUser(string nom, string prenom, int age, int id, string& username, string& password, string& role, std::shared_ptr<Archive> archive);
-    void readUser(string& username, std::shared_ptr<Archive> archive);
-    void updateUser(string& username, string& newPassword, std::shared_ptr<Archive> archive);
-    void deleteUser(string& username, std::shared_ptr<Archive> archive);
+    void createUser(string nom, string prenom, int age, int id, string& username, string& password, string& role, std::unique_ptr<Archive>& archive);
+    void readUser(string& username, std::unique_ptr<Archive>& archive);
+    void updateUser(string& username, string& newPassword, std::unique_ptr<Archive>& archive);
+    void deleteUser(string& username, std::unique_ptr<Archive>& archive);
 };
 
 #endif // ADMINISTRATEUR_H

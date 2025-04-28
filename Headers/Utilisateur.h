@@ -13,6 +13,7 @@ protected:
 
 public:
     // Constructors and Destructor
+    Utilisateur() = default; // Default constructor
     Utilisateur(string nom, string prenom, int age, int id, string &username, string &mdp) : Personne(nom, prenom, age), id(id), username(username), mdp(mdp) {};
     ~Utilisateur();
 
@@ -33,6 +34,8 @@ public:
     bool login(string &username, string &mdp);
     void logout();
     bool modifierMDP(string &ancienmdp, string &nouveaumdp);
+
+    
 
     // Overload the << operator
     friend std::ostream &operator<<(std::ostream &os, const Utilisateur &utilisateur)

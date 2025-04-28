@@ -1,17 +1,13 @@
 #include "../Headers/Reservation.h"
 #include <iostream>
+#include <string>
+#include <memory> // For std::unique_ptr
 
 using namespace std;
 
 // Constructor
-Reservation::Reservation(SansAbri* client, Chambre* chambre, const string& checkIn, const string& checkOut) 
-    : client(client), chambre(chambre), dateArrivee(checkIn), dateDepart(checkOut) {}
-
-// Destructor
-Reservation::~Reservation() {
-    delete client;
-    delete chambre;
-}
+Reservation::Reservation(unique_ptr<SansAbri> client, unique_ptr<Chambre> chambre, const string& checkIn, const string& checkOut) 
+        : client(move(client)), chambre(move(chambre)), dateArrivee(checkIn), dateDepart(checkOut) {}
 
 // Getters
 int Reservation::getReservationID() const {
@@ -68,14 +64,11 @@ void Reservation::prolongerSejour(const string& newCheckOutDate) {
 
 void Reservation::annulerReservation() {
     cout << "Reservation for client " << client->getNom() << " has been canceled." << endl;
-    delete client;
-    delete chambre;
-    client = nullptr;
-    chambre = nullptr;
+    client.reset();
+    chambre.reset();
 }
 
-void Reservation::changerChambre(Chambre* nouvelleChambre) {
-    delete chambre;
-    chambre = nouvelleChambre;
+void Reservation::changerChambre(unique_ptr<Chambre> nouvelleChambre) {
+    chambre = move(nouvelleChambre);
     cout << "Room changed successfully to room number: " << chambre->getRoomNumber() << endl;
 }
