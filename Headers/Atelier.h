@@ -35,6 +35,7 @@ public:
     // Surcharges
     friend ostream& operator<<(ostream& out, const Atelier& a);
     friend istream& operator>>(istream& in, Atelier& a);
+    bool operator==(const Atelier& other) const;  // Declaration of operator==
 };
 
 #endif

@@ -1,79 +1,97 @@
 #include "Evenement.h"
-#include "TravailleurSocialEvenementiel.h" // Inclure car on utilise TravailleurSocialEvenementiel
+#include <iostream>
 
-// Constructeur par défaut
-Evenement::Evenement() : date(""), lieu(""), description(""), resp(nullptr) {}
+using namespace std;
 
-// Constructeur paramétré
+// Initialisation de l'attribut statique
+int Evenement::nbEvenements = 0;
+
+// Constructeurs
+Evenement::Evenement() : date(""), lieu(""), description(""), resp() {
+    nbEvenements++;
+}
+
+Evenement::Evenement(const string& date, const string& lieu, const string& description, const vector<TravailleurSocialEvenementiel*>& resp)
+    : date(date), lieu(lieu), description(description), resp(resp) {
+    nbEvenements++;
+}
+
+Evenement::Evenement(const Evenement& autre)
+    : date(autre.date), lieu(autre.lieu), description(autre.description), resp(autre.resp) {
+    nbEvenements++;
+}
 Evenement::Evenement(const string& date, const string& lieu, const string& description, TravailleurSocialEvenementiel* resp)
-    : date(date), lieu(lieu), description(description), resp(resp) {}
+    : date(date), lieu(lieu), description(description), resp(resp) {
+    // Initialization or other logic, if necessary
+}
 
-// Constructeur par recopie
-Evenement::Evenement(const Evenement& other)
-    : date(other.date), lieu(other.lieu), description(other.description), resp(other.resp) {}
 
-// Destructeur
-Evenement::~Evenement() {}
+Evenement::~Evenement() {
+    nbEvenements--;
+}
 
-// Getters
+// Getters et Setters
 string Evenement::getDate() const {
     return date;
+}
+
+void Evenement::setDate(const string& date) {
+    this->date = date;
 }
 
 string Evenement::getLieu() const {
     return lieu;
 }
 
-string Evenement::getDescription() const {
-    return description;
-}
-
-TravailleurSocialEvenementiel* Evenement::getResponsable() const {
-    return resp;
-}
-
-// Setters
-void Evenement::setDate(const string& date) {
-    this->date = date;
-}
-
 void Evenement::setLieu(const string& lieu) {
     this->lieu = lieu;
+}
+
+string Evenement::getDescription() const {
+    return description;
 }
 
 void Evenement::setDescription(const string& description) {
     this->description = description;
 }
 
-void Evenement::setResponsable(TravailleurSocialEvenementiel* resp) {
+vector<TravailleurSocialEvenementiel*> Evenement::getResp() const {
+    return resp;
+}
+
+void Evenement::setResp(const vector<TravailleurSocialEvenementiel*>& resp) {
     this->resp = resp;
 }
 
-// Méthode afficherInfo
+// Méthode statique
+int Evenement::getNbEvenements() {
+    return nbEvenements;
+}
+
+// Méthodes
 void Evenement::afficherInfo() const {
-    cout << "Date : " << date << endl;
-    cout << "Lieu : " << lieu << endl;
-    cout << "Description : " << description << endl;
-    if (resp)
-        cout << "Responsable : [Présent]" << endl;
-    else
-        cout << "Responsable : [Aucun]" << endl;
+    cout << "Date: " << date << endl;
+    cout << "Lieu: " << lieu << endl;
+    cout << "Description: " << description << endl;
+    cout << "Nombre de responsables: " << resp.size() << endl;
 }
 
-// Surcharge de l'opérateur <<
-ostream& operator<<(ostream& out, const Evenement& e) {
-    out << e.date << " " << e.lieu << " " << e.description;
-    return out;
+// Surcharges d'opérateurs
+ostream& operator<<(ostream& os, const Evenement& e) {
+    os << e.date << " " << e.lieu << " " << e.description << " " << e.resp.size();
+    return os;
 }
 
-// Surcharge de l'opérateur >>
-istream& operator>>(istream& in, Evenement& e) {
-    cout << "Date: ";
-    getline(in, e.date);
-    cout << "Lieu: ";
-    getline(in, e.lieu);
-    cout << "Description: ";
-    getline(in, e.description);
-    e.resp = nullptr; // Pas de saisie de pointeur via clavier ici
-    return in;
+istream& operator>>(istream& is, Evenement& e) {
+    cout << "Entrez la date : ";
+    is >> e.date;
+    cout << "Entrez le lieu : ";
+    is >> e.lieu;
+    cout << "Entrez la description : ";
+    is >> e.description;
+    return is;
+}
+
+bool Evenement::operator==(const Evenement& autre) const {
+    return (date == autre.date && lieu == autre.lieu && description == autre.description && resp.size() == autre.resp.size());
 }

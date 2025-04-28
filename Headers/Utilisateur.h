@@ -35,7 +35,8 @@ public:
     void modifierMDP(const string& ancienMDP, const string& nouveauMDP);
 
     // Getters and Setters
-    vector<int*> getId() const;
+    int getId() const;  // Instead of returning a pointer to int
+
     void addId(int idValue);
     void clearIds();
 

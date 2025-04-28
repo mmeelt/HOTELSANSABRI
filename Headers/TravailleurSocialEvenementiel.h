@@ -25,22 +25,25 @@ public:
     virtual ~TravailleurSocialEvenementiel();
 
     // CRUD methods
-    void modifierTravailleurSocialEvenementiel(vector<TravailleurSocialEvenementiel*>& list, int idRecherche);
-    void supprimerTravailleurSocialEvenementiel(vector<TravailleurSocialEvenementiel*>& list, int idRecherche);
+    void modifierTravailleurSocialEvenementiel(vector<TravailleurSocialEvenementiel>& list, int idRecherche);
+    void supprimerTravailleurSocialEvenementiel(vector<TravailleurSocialEvenementiel>& list, int idRecherche);
 
     // Specific Methods
-    void inscrireAUneFormation(SansAbri s, Formation* f);
-    void inscrireAUneAtelier(SansAbri s, Atelier* a);
+    void inscrireAUneFormation(SansAbri s, Formation& f);
+    void inscrireAUneAtelier(SansAbri s, Atelier& a);
 
-    void planifierEvenement(Evenement* evenement);
-    void annulerEvenement(Evenement* evenement);
-    void modifierEvenement(Evenement* evenement);
-    void ajouterEvenement(Evenement* evenement);
-    void supprimerEvenement(Evenement* evenement);
+    void planifierEvenement(Evenement& evenement);
+    void annulerEvenement(Evenement& evenement);
+    void modifierEvenement(Evenement& evenement);
+    void ajouterEvenement(Evenement& evenement);
+    void supprimerEvenement(Evenement& evenement);
 
     // Operator Overloading
     friend ostream& operator<<(ostream& os, const TravailleurSocialEvenementiel& tse);
     friend istream& operator>>(istream& is, TravailleurSocialEvenementiel& tse);
+
+    // Operator ==
+    bool operator==(const TravailleurSocialEvenementiel& other) const;
 };
 
 #endif // TRAVAILLEURSOCIALEVENEMENTIEL_H

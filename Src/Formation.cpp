@@ -56,3 +56,8 @@ istream& operator>>(istream& in, Formation& f) {
     f.formateur = nullptr; // Pas de saisie de pointeur via clavier
     return in;
 }
+
+
+bool Formation::operator==(const Formation& other) const {
+    return Evenement::operator==(other) && theme == other.theme && formateur == other.formateur;
+}

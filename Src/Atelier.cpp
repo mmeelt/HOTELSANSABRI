@@ -8,7 +8,7 @@ Atelier::Atelier(const string& date, const string& lieu, const string& descripti
                  const string& sujet, const string& duree, int capacite)
     : Evenement(date, lieu, description, resp), sujet(sujet), duree(duree), capacite(capacite) {}
 
-// Constructeur par recopie
+// Constructeur de recopie
 Atelier::Atelier(const Atelier& other)
     : Evenement(other), sujet(other.sujet), duree(other.duree), capacite(other.capacite) {}
 
@@ -49,12 +49,13 @@ void Atelier::afficherInfo() const {
     cout << "Capacité : " << capacite << endl;
 }
 
-// Surcharges
+// Surcharge de l'opérateur <<
 ostream& operator<<(ostream& out, const Atelier& a) {
     out << (Evenement&)a << " " << a.sujet << " " << a.duree << " " << a.capacite;
     return out;
 }
 
+// Surcharge de l'opérateur >>
 istream& operator>>(istream& in, Atelier& a) {
     in >> (Evenement&)a;
     cout << "Sujet: ";
@@ -64,4 +65,9 @@ istream& operator>>(istream& in, Atelier& a) {
     cout << "Capacité: ";
     in >> a.capacite;
     return in;
+}
+
+// Surcharge de l'opérateur ==
+bool Atelier::operator==(const Atelier& other) const {
+    return Evenement::operator==(other) && sujet == other.sujet && duree == other.duree && capacite == other.capacite;
 }

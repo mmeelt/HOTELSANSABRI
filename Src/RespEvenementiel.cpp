@@ -72,27 +72,34 @@ void RespEvenementiel::annulerEvenement(Evenement* evenement) {
     cout << "Evenement non trouve !" << endl;
 }
 
-void RespEvenementiel::modifierEvenement(Evenement* evenement) {
-    cout << "Modifier l'evenement: " << evenement->getDescription() << endl;
-    // Exemple : on peut demander à l'utilisateur de saisir de nouvelles informations ici
+void RespEvenementiel::modifierRespEvenementiel(vector<RespEvenementiel*>& respList, int idRecherche) {
+    for (auto& resp : respList) {
+        if (resp->getId() == idRecherche) {  // Corrected comparison
+            cout << "RespEvenementiel found: " << *resp << endl;
+            cout << "Modify information:" << endl;
+            cin >> *resp;
+            return;
+        }
+    }
+    cout << "RespEvenementiel not found!" << endl;
 }
 
 void RespEvenementiel::ajouterEvenement(Evenement* evenement) {
     evenements.push_back(evenement);
     cout << "Evenement ajoute: " << evenement->getDescription() << endl;
 }
-
-void RespEvenementiel::supprimerEvenement(Evenement* evenement) {
-    for (auto it = evenements.begin(); it != evenements.end(); ++it) {
-        if (*it == evenement) {
-            delete *it;
-            evenements.erase(it);
-            cout << "Evenement supprime!" << endl;
+void RespEvenementiel::supprimerRespEvenementiel(vector<RespEvenementiel*>& respList, int idRecherche) {
+    for (auto it = respList.begin(); it != respList.end(); ++it) {
+        if ((*it)->getId() == idRecherche) {  // Corrected comparison
+            delete *it;  // Make sure not deleting it twice
+            respList.erase(it);
+            cout << "RespEvenementiel deleted!" << endl;
             return;
         }
     }
-    cout << "Evenement non trouve !" << endl;
+    cout << "RespEvenementiel not found!" << endl;
 }
+
 
 // Getters and Setters
 vector<Evenement*> RespEvenementiel::getEvenements() const {

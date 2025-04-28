@@ -34,6 +34,8 @@ public:
     // Surcharges
     friend ostream& operator<<(ostream& out, const Formation& f);
     friend istream& operator>>(istream& in, Formation& f);
+    bool operator==(const Formation& other) const;
+
 };
 
 #endif
